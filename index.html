@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Magic ✨</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: white;
+  background:
+    radial-gradient(circle at top left, #ff85c1, transparent 40%),
+    radial-gradient(circle at bottom right, #63e6ff, transparent 40%),
+    linear-gradient(135deg, #6c35d9, #17133f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  padding: 32px 24px;
+  border-radius: 28px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+.stars {
+  font-size: 42px;
+  animation: float 2s ease-in-out infinite;
+}
+
+h1 {
+  font-size: 30px;
+  margin: 18px 0;
+}
+
+p {
+  line-height: 1.7;
+  margin: 16px 0;
+  color: #f6efff;
+}
+
+.amount {
+  font-size: 52px;
+  font-weight: 900;
+  margin: 20px 0;
+}
+
+.tag {
+  display: inline-block;
+  background: rgba(255,255,255,.16);
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 13px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 50px;
+  padding: 17px;
+  margin-top: 18px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pay {
+  color: #6b25c8;
+  background: linear-gradient(90deg,#ffe66d,#ffb4e6);
+  box-shadow: 0 8px 25px #ffb4e655;
+}
+
+.confirm {
+  background: rgba(255,255,255,.15);
+  color: white;
+  border: 1px solid white;
+}
+
+.small {
+  font-size: 12px;
+  opacity: .8;
+}
+
+#thanks {
+  display: none;
+  margin-top: 25px;
+}
+
+#thanks h1 {
+  color: #ffe66d;
+}
+
+.heart {
+  font-size: 35px;
+  animation: beat 1s infinite;
+}
+
+.footer {
+  margin-top: 24px;
+  font-size: 12px;
+  opacity: .75;
+}
+
+@keyframes float {
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes beat {
+  50% { transform: scale(1.15); }
+}
+/* Floating hearts background */
+
+.floating-heart {
+  position: fixed;
+  top: -40px;
+  z-index: 0;
+  pointer-events: none;
+  animation: heartFall linear forwards;
+  opacity: 0.85;
+}
+
+.card {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes heartFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="stars">✨ 🪄 ✨</div>
+
+  <h1>A Little Magic Awaits</h1>
+
+  <div class="tag">A small voluntary contribution ❤️</div>
+
+  <p>
+    Sometimes a small act of kindness<br>
+    can create a beautiful moment.
+  </p>
+
+  <div class="amount">₹20</div>
+
+  <p>
+    If you wish to support me,<br>
+    make a small contribution and discover<br>
+    a little message made with love.
+  </p>
+
+  <button class="pay" onclick="payNow()">
+    ✨ Contribute ₹20
+  </button>
+
+  <p class="small">
+    Payment is voluntary. No purchase or reward is promised.
+  </p>
+
+  <button class="confirm"
+  onclick="unlockMessage()">
+    I've completed my payment
+  </button>
+
+  <div id="thanks">
+
+    <div class="heart">💖 ✨ 💖</div>
+
+    <h1>Thank You!</h1>
+
+    <p>
+      Neenga vandhu oru periya uthavi
+      panni irukkeenga ❤️
+    </p>
+
+    <p>
+      Ungaloda indha kindness-ku
+      palan ungalukku viraivil varum ✨
+    </p>
+
+    <p>
+      Your little act means a lot.
+      Thank you for being wonderful! 🌸
+    </p>
+
+    <h2>Love You So Much ❤️</h2>
+
+    <p>Stay blessed! 🪄</p>
+
+  </div>
+
+  <div class="footer">
+    Made with ❤️ and a little magic
+  </div>
+
+</div>
+
+<script>
+
+// EDIT THESE TWO VALUES
+const UPI_ID = "snirmalaias@okicici";
+const PAYEE_NAME = "Nirmalarasi S";
+
+function payNow() {
+
+  sessionStorage.setItem("paymentAttempted", "yes");
+
+  const link =
+    "upi://pay?pa=" + encodeURIComponent(UPI_ID) +
+    "&pn=" + encodeURIComponent(PAYEE_NAME) +
+    "&am=20&cu=INR" +
+    "&tn=" + encodeURIComponent("Voluntary contribution");
+
+  window.location.href = link;
+}
+
+function unlockMessage() {
+
+  const attempted =
+    sessionStorage.getItem("paymentAttempted");
+
+  if (attempted === "yes") {
+
+    showMessage();
+
+    sessionStorage.removeItem("paymentAttempted");
+
+  } else {
+
+    alert("✨ Please make your contribution first! 💖");
+
+  }
+}
+
+function showMessage() {
+
+  document.getElementById("thanks").style.display = "block";
+
+  document.getElementById("thanks")
+    .scrollIntoView({behavior: "smooth"});
+
+  for (let i = 0; i < 35; i++) {
+
+    const el = document.createElement("span");
+
+    const symbols = ["💖","✨","🌸","❤️","💫"];
+
+    el.innerHTML = symbols[
+      Math.floor(Math.random() * symbols.length)
+    ];
+
+    el.style.position = "fixed";
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.top = "-30px";
+    el.style.fontSize = "24px";
+    el.style.pointerEvents = "none";
+    el.style.zIndex = "9999";
+
+    document.body.appendChild(el);
+
+    el.animate(
+      [
+        { transform: "translateY(0)", opacity: 1 },
+        { transform: "translateY(110vh)", opacity: 0 }
+      ],
+      {
+        duration: 2500 + Math.random() * 2500,
+        easing: "ease-in"
+      }
+    );
+
+    setTimeout(() => el.remove(), 5000);
+  }
+}
+// Beautiful floating hearts background
+
+function createFloatingHeart() {
+
+  const heart = document.createElement("div");
+
+  const heartTypes = ["🤍", "💕", "💗", "💖", "💘", "🩷"];
+
+  heart.innerHTML =
+    heartTypes[Math.floor(Math.random() * heartTypes.length)];
+
+  heart.className = "floating-heart";
+
+  heart.style.left = Math.random() * 100 + "vw";
+
+  heart.style.fontSize =
+    (16 + Math.random() * 25) + "px";
+
+  heart.style.animationDuration =
+    (5 + Math.random() * 5) + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 10000);
+}
+
+// Hearts continuously float
+
+setInterval(createFloatingHeart, 450);
+
+</script>
+
+</body>
+</html>
